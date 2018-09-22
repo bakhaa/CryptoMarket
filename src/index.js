@@ -1,30 +1,14 @@
-import { Navigation } from 'react-native-navigation';
+import React from 'react';
+import { Provider } from 'react-redux';
 
-import ScreenCrypto from './screens/ScreenCrypto';
-import ScreenItemCrypto from './screens/ScreenItemCrypto';
-import ScreenSettings from './screens/ScreenSettings';
+import registerScreens from './config/routes';
+import configureStore from './config/store';
 
-export default () => {
-  Navigation.registerComponent('ScreenCrypto', () => ScreenCrypto);
-  Navigation.registerComponent('ScreenItemCrypto', () => ScreenItemCrypto);
-  Navigation.registerComponent('Settings', () => ScreenSettings);
+const store = configureStore();
+const App = registerScreens(store, Provider);
 
-  Navigation.startTabBasedApp({
-    tabs: [
-      {
-        label: 'Crypto',
-        screen: 'ScreenCrypto',
-        icon: require('./images/icon2.png'),
-        selectedIcon: require('./images/icon2_selected.png'),
-        title: 'Market Data',
-      },
-      {
-        label: 'Settings',
-        screen: 'Settings',
-        icon: require('./images/icon1.png'),
-        selectedIcon: require('./images/icon1_selected.png'),
-        title: 'Settings',
-      },
-    ],
-  });
-};
+export default () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
