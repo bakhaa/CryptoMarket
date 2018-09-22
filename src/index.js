@@ -1,30 +1,30 @@
 import { Navigation } from 'react-native-navigation';
 
-import Screen1 from './screens/Screen1';
-import Screen2 from './screens/Screen2';
+import ScreenCrypto from './screens/ScreenCrypto';
+import ScreenItemCrypto from './screens/ScreenItemCrypto';
 import ScreenSettings from './screens/ScreenSettings';
 
 export default () => {
-  Navigation.registerComponent('Screen1', () => Screen1);
-  Navigation.registerComponent('Screen2', () => Screen2);
+  Navigation.registerComponent('ScreenCrypto', () => ScreenCrypto);
+  Navigation.registerComponent('ScreenItemCrypto', () => ScreenItemCrypto);
   Navigation.registerComponent('Settings', () => ScreenSettings);
 
   Navigation.startTabBasedApp({
     tabs: [
       {
-        label: 'Лента',
-        screen: 'Screen1',
+        label: 'Crypto',
+        screen: 'ScreenCrypto',
         icon: require('./images/icon2.png'),
         selectedIcon: require('./images/icon2_selected.png'),
-        title: 'Лента'
+        title: 'Market Data',
       },
       {
-        label: 'Настройки',
+        label: 'Settings',
         screen: 'Settings',
         icon: require('./images/icon1.png'),
         selectedIcon: require('./images/icon1_selected.png'),
-        title: 'Настройки'
-      }
-    ]
+        title: 'Settings',
+      },
+    ],
   });
 };

@@ -1,32 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: '500',
-  },
-});
+const StyledContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  background: #111c2b;
+`;
 
-const Container = ({ backgroundColor, onPress, children }) => (
-  <View style={[styles.container, { backgroundColor }]}>
-    <TouchableOpacity onPress={onPress}>
-      <Text style={styles.text}>{backgroundColor}</Text>
-    </TouchableOpacity>
+const Container = ({ children }) => (
+  <StyledContainer>
     {children}
-  </View>
+  </StyledContainer>
 );
 
 Container.propTypes = {
-  backgroundColor: PropTypes.string,
-  onPress: PropTypes.func,
   children: PropTypes.any,
 };
 

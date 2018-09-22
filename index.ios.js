@@ -1,3 +1,3 @@
-import registerApp from './app/index';
+import registerApp from './src/index';
 
 registerApp();
