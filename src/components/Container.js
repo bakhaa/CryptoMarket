@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,5 +23,11 @@ const Container = ({ backgroundColor, onPress, children }) => (
     {children}
   </View>
 );
+
+Container.propTypes = {
+  backgroundColor: PropTypes.string,
+  onPress: PropTypes.func,
+  children: PropTypes.any,
+};
 
 export default Container;
