@@ -16,7 +16,7 @@ const Item = styled.View`
 
 const ItemBlock = styled.View`
   justify-content: center;
-  align-items: ${props => props.right ? 'flex-end' : 'flex-start'};
+  align-items: ${props => props.floatRight ? 'flex-end' : 'flex-start'};
 `;
 
 const ChartName = styled.Text`
@@ -56,7 +56,7 @@ const ItemCrypto = ({ item, idx, handlePress }) => (
         <ChartName>{item.chartName}</ChartName>
         <UpdateDate>{item.updateduk}</UpdateDate>
       </ItemBlock>
-      <ItemBlock right>
+      <ItemBlock floatRight>
         <CurrentCourse low={item.changepc > 0}>
           {item.rate_float}
           <Currency> USD</Currency>
