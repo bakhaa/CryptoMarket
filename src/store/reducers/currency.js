@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 // constants
 import { REQUEST, SUCCESS, FAILURE } from '../constants';
-import { FETCH_CURRENCY } from '../constants/currency';
+import { FETCH_CURRENCY, CHANGE_SELECTED_CURRENCY } from '../constants/currency';
 
 const initialState = fromJS({
   loading: false,
@@ -26,6 +26,9 @@ export default function main(state = initialState, action) {
       return state
         .set('loading', false)
         .set('list', fromJS({}));
+    }
+    case CHANGE_SELECTED_CURRENCY: {
+      return state.set('selectedCurrency', action.payload);
     }
     default:
       return state;
