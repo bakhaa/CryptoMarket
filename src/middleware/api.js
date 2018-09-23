@@ -1,7 +1,7 @@
 /* global fetch:false */
 import { REQUEST, SUCCESS, FAILURE } from '../store/constants';
 
-const HOST_API = process.env.HOST_API || 'http://localhost:8081';
+const HOST_API = process.env.HOST_API || 'https://api.coindesk.com';
 
 export const API = () => next => (action) => {
   const { callAPI, type, options, ...rest } = action;
@@ -11,7 +11,6 @@ export const API = () => next => (action) => {
   });
 
   return fetch(HOST_API + callAPI, {
-    body: JSON.stringify(options || {}),
     headers: {
       'content-type': 'application/json',
     },

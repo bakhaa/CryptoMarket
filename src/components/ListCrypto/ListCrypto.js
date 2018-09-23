@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Text, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+
+import { fetchCurrency } from '../../store/actions/currency';
+import { getLoading, getLoaded, getCurrencyList } from '../../selectors/currency';
 
 import ItemCrypto from './ItemCrypto';
 
@@ -10,33 +14,55 @@ const List = styled.FlatList`
   width: 100%;
 `;
 
-const data = [
-  { chartName: 'Bitcoin', changepc: -0.93, updateduk: 'Sep 22, 2018 at 13:18 BST', rate_float: 6690.0663, },
-  { chartName: 'Ethereum', changepc: -3.44, updateduk: 'Sep 22, 2018 at 13:18 BST', rate_float: 5117.4658, },
-  { chartName: 'Bitcoin Cash', changepc: -4.44, updateduk: 'Sep 22, 2018 at 13:18 BST', rate_float: 5689.9013, },
-  { chartName: 'Litecoin', changepc: -2.98, updateduk: 'Sep 22, 2018 at 13:18 BST', rate_float: 40202.5, },
-  { chartName: 'XRP', changepc: 0.81, updateduk: 'Sep 22, 2018 at 13:18 BST', rate_float: 6690.0663, },
-];
-
-const ListCrypto = ({ handlePress }) => (
-  <List
-    data={data}
-    renderItem={
-      ({ item, index }) => (
-        <ItemCrypto
-          key={index}
-          item={item}
-          idx={index}
-          handlePress={handlePress}
-        />)
+class ListCrypto extends Component {
+  componentDidMount() {
+    const { loaded, loading, onFetchCurrency } = this.props;
+    if (!loaded && !loading) {
+      onFetchCurrency();
     }
-  />
-);
+  }
+
+  render() {
+    const { handlePress, list, loading } = this.props;
+    if (loading) return (<ActivityIndicator size="large" color="#ffffff" />);
+    if (list.length === 0) return (<Text>No data</Text>);
+
+    return (
+      <List
+        data={list}
+        keyExtractor={({ index }) => index}
+        renderItem={
+          ({ item, index }) => (
+            <ItemCrypto
+              item={item}
+              selectedCurrency="USD"
+              idx={index}
+              handlePress={handlePress}
+            />)
+        }
+      />
+    );
+  }
+}
 
 ListCrypto.propTypes = {
   handlePress: PropTypes.func.isRequired,
+  onFetchCurrency: PropTypes.func.isRequired,
+  loaded: PropTypes.bool,
+  list: PropTypes.array,
+  loading: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  loading: getLoading(state),
+  loaded: getLoaded(state),
+  list: getCurrencyList(state),
+});
 
-export default connect(mapStateToProps)(ListCrypto);
+const mapDispatchToProps = dispatch => ({
+  onFetchCurrency: () => {
+    dispatch(fetchCurrency());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListCrypto);

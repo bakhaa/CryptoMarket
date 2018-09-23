@@ -46,29 +46,35 @@ const ChangePC = styled.Text`
   font-size: 12;
 `;
 
-const ItemCrypto = ({ item, idx, handlePress }) => (
-  <TouchableOpacity
-    style={{ width: '100%' }}
-    onPress={handlePress.bind(null, item)}
-  >
-    <Item odd={idx % 2 === 0}>
-      <ItemBlock>
-        <ChartName>{item.chartName}</ChartName>
-        <UpdateDate>{item.updateduk}</UpdateDate>
-      </ItemBlock>
-      <ItemBlock floatRight>
-        <CurrentCourse low={item.changepc > 0}>
-          {item.rate_float}
-          <Currency> USD</Currency>
-        </CurrentCourse>
-        <ChangePC>{`${item.changepc > 0 ? '+' : ''}${item.changepc}`}</ChangePC>
-      </ItemBlock>
-    </Item>
-  </TouchableOpacity>
-);
+const ItemCrypto = ({ item, idx, selectedCurrency, handlePress }) => {
+  const changepc = `${item.header_data.changepc > 0 ? '+' : ''}${item.header_data.changepc}`;
+  const date = 'Sep 23, 2018 at 13:35 BST';
+
+  return (
+    <TouchableOpacity
+      style={{ width: '100%' }}
+      onPress={handlePress.bind(null, item)}
+    >
+      <Item odd={idx % 2 === 0}>
+        <ItemBlock>
+          <ChartName>{item.header_data.chartName}</ChartName>
+          <UpdateDate>{date}</UpdateDate>
+        </ItemBlock>
+        <ItemBlock floatRight>
+          <CurrentCourse low={item.header_data.changepc > 0}>
+            {item.header_data.bpi[selectedCurrency].rate_float}
+            <Currency>{` ${selectedCurrency}`}</Currency>
+          </CurrentCourse>
+          <ChangePC>{changepc}</ChangePC>
+        </ItemBlock>
+      </Item>
+    </TouchableOpacity>
+  );
+};
 
 ItemCrypto.propTypes = {
   item: PropTypes.any,
+  selectedCurrency: PropTypes.string,
   idx: PropTypes.any,
   handlePress: PropTypes.func,
 };
