@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { Text } from 'react-native';
 import Container from '../components/Container';
 import { ListCrypto } from '../components/ListCrypto';
 
 class ScreenCrypto extends Component {
-  handlePress = (item) => {
+  handlePress = (title) => {
     const { navigator } = this.props;
     navigator.push({
       screen: 'ScreenItemCrypto',
-      title: item.chartName,
+      passProps: { chartName: title },
+      title,
     });
   };
 

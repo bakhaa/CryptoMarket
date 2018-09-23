@@ -17,3 +17,13 @@ export const getCurrencyList = createSelector(
   currencySelector,
   currency => R.values(currency.get('list').toJS())
 );
+
+export const getSelectedCurrency = createSelector(
+  currencySelector,
+  currency => currency.get('selectedCurrency')
+);
+
+export const getCurrency = (state, chartName) => {
+  const list = getCurrencyList(state);
+  return list.find(item => item.header_data.chartName === chartName);
+};

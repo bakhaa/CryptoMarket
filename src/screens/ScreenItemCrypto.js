@@ -1,11 +1,11 @@
 import React from 'react';
-// import { Text } from 'react-native';
 import Container from '../components/Container';
+import Currency from '../components/Currency/Currency';
 
-const ScreenItemCrypto = () => (
-  <Container
-    backgroundColor="#c95e0c"
-  />
+const ScreenItemCrypto = ({ chartName }) => (
+  <Container backgroundColor="#c95e0c">
+    <Currency chartName={chartName} />
+  </Container>
 );
 
 export default ScreenItemCrypto;

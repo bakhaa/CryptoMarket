@@ -5,7 +5,12 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { fetchCurrency } from '../../store/actions/currency';
-import { getLoading, getLoaded, getCurrencyList } from '../../selectors/currency';
+import {
+  getLoading,
+  getLoaded,
+  getCurrencyList,
+  getSelectedCurrency,
+} from '../../selectors/currency';
 
 import ItemCrypto from './ItemCrypto';
 
@@ -22,20 +27,22 @@ class ListCrypto extends Component {
     }
   }
 
+  keyExtractor = (item, index) => index.toString();
+
   render() {
-    const { handlePress, list, loading } = this.props;
+    const { handlePress, list, loading, selected } = this.props;
     if (loading) return (<ActivityIndicator size="large" color="#ffffff" />);
     if (list.length === 0) return (<Text>No data</Text>);
 
     return (
       <List
         data={list}
-        keyExtractor={({ index }) => index}
+        keyExtractor={this.keyExtractor}
         renderItem={
           ({ item, index }) => (
             <ItemCrypto
               item={item}
-              selectedCurrency="USD"
+              selectedCurrency={selected}
               idx={index}
               handlePress={handlePress}
             />)
@@ -50,12 +57,14 @@ ListCrypto.propTypes = {
   onFetchCurrency: PropTypes.func.isRequired,
   loaded: PropTypes.bool,
   list: PropTypes.array,
+  selected: PropTypes.string,
   loading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   loading: getLoading(state),
   loaded: getLoaded(state),
+  selected: getSelectedCurrency(state),
   list: getCurrencyList(state),
 });
 

@@ -47,22 +47,23 @@ const ChangePC = styled.Text`
 `;
 
 const ItemCrypto = ({ item, idx, selectedCurrency, handlePress }) => {
-  const changepc = `${item.header_data.changepc > 0 ? '+' : ''}${item.header_data.changepc}`;
+  const { header_data: crypto } = item; // eslint-disable-line
+  const changepc = `${crypto.changepc > 0 ? '+' : ''}${crypto.changepc}`;
   const date = 'Sep 23, 2018 at 13:35 BST';
 
   return (
     <TouchableOpacity
       style={{ width: '100%' }}
-      onPress={handlePress.bind(null, item)}
+      onPress={handlePress.bind(null, crypto.chartName)}
     >
       <Item odd={idx % 2 === 0}>
         <ItemBlock>
-          <ChartName>{item.header_data.chartName}</ChartName>
+          <ChartName>{crypto.chartName}</ChartName>
           <UpdateDate>{date}</UpdateDate>
         </ItemBlock>
         <ItemBlock floatRight>
-          <CurrentCourse low={item.header_data.changepc > 0}>
-            {item.header_data.bpi[selectedCurrency].rate_float}
+          <CurrentCourse low={crypto.changepc > 0}>
+            {crypto.bpi[selectedCurrency].rate_float}
             <Currency>{` ${selectedCurrency}`}</Currency>
           </CurrentCourse>
           <ChangePC>{changepc}</ChangePC>
